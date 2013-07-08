@@ -139,6 +139,11 @@ class WebTestCase(ChannelPluginTestCase):
             self.assertNotError('web fetch http://slashdot.org/recent')
             conf.supybot.plugins.Web.urlWhitelist.set('http://slashdot.org http://fsf.org')
             self.assertNotError('doctype http://fsf.org')
+            self.assertError('wuadd invalidurlbla')
+            self.assertNotError('wuremove http://fsf.org')
+            self.assertError('web title http://fsf.org')
+            self.assertNotError('wuadd http://fsf.org')
+            self.assertNotError('web title fsf.org')
         finally:
             conf.supybot.plugins.Web.urlWhitelist.set('')
             conf.supybot.plugins.Web.fetch.maximum.set(fm)

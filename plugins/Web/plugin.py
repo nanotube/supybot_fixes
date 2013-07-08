@@ -271,6 +271,41 @@ class Web(callbacks.PluginRegexp):
         irc.reply(fd.read(max))
     fetch = wrap(fetch, ['url'])
 
+    def wuadd(self, irc, msg, args, url):
+        """<url>
+        
+        Add <url> to whitelist.
+        """
+        uw = set(self.registryValue('urlWhitelist'))
+        uw.update([url,])
+        conf.supybot.plugins.Web.urlWhitelist.setValue(list(uw))
+        irc.replySuccess()
+    wuadd = wrap(wuadd, ['admin', 'url'])
+
+    def wuremove(self, irc, msg, args, url):
+        """<url>
+        
+        Remove <url> from whitelist.
+        """
+        uw = set(self.registryValue('urlWhitelist'))
+        uw.discard(url)
+        conf.supybot.plugins.Web.urlWhitelist.setValue(list(uw))
+        irc.replySuccess()
+    wuremove = wrap(wuremove, ['admin', 'url'])
+
+    def wulist(self, irc, msg, args):
+        """takes no arguments
+
+        Returns the list of urls in the whitelist.
+        """
+        L = list(self.registryValue('urlWhitelist'))
+        if L:
+            utils.sortBy(str.lower, L)
+            irc.reply(format('%L', L))
+        else:
+            irc.reply('There are no urls in the whitelist.')
+    wulist = wrap(wulist, ['admin'])
+
 Class = Web
 
 # vim:set shiftwidth=4 softtabstop=4 expandtab textwidth=79:
