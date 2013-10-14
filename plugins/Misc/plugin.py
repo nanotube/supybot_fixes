@@ -211,9 +211,8 @@ class Misc(callbacks.Plugin):
         Returns the version of the current bot.
         """
         try:
-            newest = utils.web.getUrl('http://gribble.git.sourceforge.net/git/'\
-                                      'gitweb.cgi?p=gribble/gribble;a=blob_plain;'\
-                                      'f=src/version.py;hb=HEAD')
+            newest = utils.web.getUrl('http://sourceforge.net/p/gribble/'\
+                        'code/ci/master/tree/src/version.py?format=raw')
             m = re.search(r"^version = '([^']+)'$", newest, re.M)
             newest = 'The newest version available in the gribble git '\
                      'repository is %s.' % (m.group(1),)
