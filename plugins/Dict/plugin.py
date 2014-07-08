@@ -140,7 +140,7 @@ class Dict(callbacks.Plugin):
         except socket.error, e:
             irc.error(utils.web.strError(e), Raise=True)
         
-        dictionary = 'moby-thes'
+        dictionary = 'moby-thesaurus'
         response = []
         for word in words:
             definitions = conn.define(dictionary, word)
