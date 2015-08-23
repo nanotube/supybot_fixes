@@ -252,14 +252,13 @@ class Channel(callbacks.Plugin):
         """[<channel>] <nick>[, <nick>, ...] [<reason>]
 
         Kicks <nick>(s) from <channel> for <reason>.  If <reason> isn't given,
-        uses the nick of the person making the command as the reason.
-        <channel> is only necessary if the message isn't sent in the channel
-        itself.
+        uses (kicked). <channel> is only necessary if the message isn't sent
+        in the channel itself.
         """
         if utils.iter.any(lambda n: ircutils.strEqual(n, irc.nick), nicks):
             irc.error('I cowardly refuse to kick myself.', Raise=True)
         if not reason:
-            reason = msg.nick
+            reason = 'kicked'
         kicklen = irc.state.supported.get('kicklen', sys.maxint)
         if len(reason) > kicklen:
             irc.error('The reason you gave is longer than the allowed '
@@ -280,7 +279,7 @@ class Channel(callbacks.Plugin):
         --exact bans only the exact hostmask; --nick bans just the nick;
         --user bans just the user, and --host bans just the host.  You can
         combine these options as you choose.  <reason> is a reason to give for
-        the kick.
+        the kick. If <reason> is not given, defaults to (kickbanned).
         <channel> is only necessary if the message isn't sent in the channel
         itself.
         """
@@ -294,7 +293,7 @@ class Channel(callbacks.Plugin):
             irc.error('I cowardly refuse to kickban myself.')
             return
         if not reason:
-            reason = msg.nick
+            reason = 'kickbanned'
         try:
             bannedHostmask = irc.state.nickToHostmask(bannedNick)
         except KeyError:
