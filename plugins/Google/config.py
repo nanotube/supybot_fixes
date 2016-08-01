@@ -109,6 +109,9 @@ conf.registerChannelValue(Google, 'colorfulFilter',
     bot's output will be made colorful (like Google's logo)."""))
 conf.registerChannelValue(Google, 'bold',
     registry.Boolean(True, """Determines whether results are bolded."""))
+conf.registerChannelValue(Google, 'oneToOne',
+    registry.Boolean(False, """Determines whether results are sent in
+    different lines or all in the same one."""))
 conf.registerChannelValue(Google, 'maximumResults',
     NumSearchResults(8, """Determines the maximum number of results returned
     from the google command."""))
