@@ -65,6 +65,10 @@ class Title(HTMLParser.HTMLParser):
             if name in self.entitydefs:
                 self.title += self.entitydefs[name]
 
+    def feed(self, text):
+        text = text.decode('utf-8')
+        HTMLParser.HTMLParser.feed(self, text)
+
 class Web(callbacks.PluginRegexp):
     """Add the help for "@help Web" here."""
     threaded = True
